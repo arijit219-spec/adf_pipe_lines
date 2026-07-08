@@ -25,6 +25,7 @@
 						"value": "https://crossarchivestorage219.blob.core.windows.net/archive/file1.csv?comp=tier",
 						"type": "Expression"
 					},
+					"body": "{}",
 					"authentication": {
 						"resource": "https://storage.azure.com/",
 						"credential": {
