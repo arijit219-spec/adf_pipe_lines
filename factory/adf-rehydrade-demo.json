@@ -1,0 +1,15 @@
+{
+	"name": "adf-rehydrade-demo",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true
+		}
+	},
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "eb0cf624-0c0b-4613-b06d-275ae6536bd0",
+		"tenantId": "9645c5bf-a6ec-48e3-8748-bf423c1c9e5a"
+	}
+}

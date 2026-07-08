@@ -1,0 +1,40 @@
+{
+	"name": "rehydrate_web",
+	"properties": {
+		"activities": [
+			{
+				"name": "Rehydrate_Blob",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "PUT",
+					"headers": {
+						"x-ms-access-tier": "Hot",
+						"x-ms-rehydrate-priority": "High",
+						"x-ms-version": "2021-12-02"
+					},
+					"url": {
+						"value": "https://rehydarchivestorage219.blob.core.windows.net/archive/file1.csv?comp=tier",
+						"type": "Expression"
+					},
+					"body": "{}",
+					"authentication": {
+						"type": "MSI",
+						"resource": "https://storage.azure.com/"
+					}
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2026-07-08T15:29:52Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

@@ -1,0 +1,43 @@
+{
+	"name": "rehydrate_web_copy_with_SP",
+	"properties": {
+		"activities": [
+			{
+				"name": "Rehydrate_Blob",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "PUT",
+					"headers": {
+						"x-ms-access-tier": "Hot",
+						"x-ms-rehydrate-priority": "High",
+						"x-ms-version": "2021-12-02"
+					},
+					"url": {
+						"value": "https://crossarchivestorage219.blob.core.windows.net/archive/file1.csv?comp=tier",
+						"type": "Expression"
+					},
+					"authentication": {
+						"resource": "https://storage.azure.com/",
+						"credential": {
+							"referenceName": "credential1",
+							"type": "CredentialReference"
+						},
+						"userTenant": "9645c5bf-a6ec-48e3-8748-bf423c1c9e5a"
+					}
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2026-07-08T21:11:44Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
