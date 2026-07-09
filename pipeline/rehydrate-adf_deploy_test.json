@@ -1,0 +1,94 @@
+{
+	"name": "rehydrate-adf_deploy_test",
+	"properties": {
+		"description": "rehydrate from archive to hot tier",
+		"activities": [
+			{
+				"name": "Lookup_Rehydration_List",
+				"description": "Lookup_Rehydration_List",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"dataset": {
+						"referenceName": "DelimitedText1",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "ForEachFile",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Lookup_Rehydration_List",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Lookup_Rehydration_List').output.value",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Rehydrate_Blob",
+							"type": "WebActivity",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"method": "PUT",
+								"headers": {
+									"x-ms-access-tier": "Hot",
+									"x-ms-rehydrate-priority": "High",
+									"x-ms-version": "2021-12-02"
+								},
+								"url": {
+									"value": "@concat('https://', item().storageAccount, '.blob.core.windows.net/', item().container, '/', item().blobName, '?comp=tier')",
+									"type": "Expression"
+								},
+								"body": "{}",
+								"authentication": {
+									"type": "MSI",
+									"resource": "https://storage.azure.com/"
+								}
+							}
+						}
+					]
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2026-07-08T15:43:29Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
