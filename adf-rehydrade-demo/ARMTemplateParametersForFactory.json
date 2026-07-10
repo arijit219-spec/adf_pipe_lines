@@ -3,7 +3,7 @@
 	"contentVersion": "1.0.0.0",
 	"parameters": {
 		"factoryName": {
-			"value": "adf-rehydrade-demo"
+			"value": "adf-rehydrade-demo-UAT"
 		},
 		"AzureBlobStorage1_properties_typeProperties_serviceEndpoint": {
 			"value": "https://rehydarchivestorage219.blob.core.windows.net/"
